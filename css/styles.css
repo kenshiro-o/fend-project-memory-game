@@ -1,0 +1,352 @@
+* { 
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+
+*, 
+*:before,
+*:after {
+  /* Chrome 9-, Safari 5-, iOS 4.2-, Android 3-, Blackberry 7- */
+  -webkit-box-sizing: border-box; 
+
+  /* Firefox (desktop or Android) 28- */
+  -moz-box-sizing: border-box;
+
+  /* Firefox 29+, IE 8+, Chrome 10+, Safari 5.1+, Opera 9.5+, iOS 5+, Opera Mini Anything, Blackberry 10+, Android 4+ */
+  box-sizing: border-box;
+}
+
+body,
+html{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;    
+}
+
+body{
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    color: #2d3c49;
+
+    background-image: url(../img/geometry2.png);    
+}
+
+h1,
+h2,
+h3,
+h4,
+h5{
+    margin: 0;
+}
+
+header,
+main,
+nav,
+footer,
+section,
+article,
+div,
+p {
+  box-sizing: border-box;  
+  padding: 0;
+  margin: 0;
+}
+
+/* Default styles for mobile devices */
+.title-header{
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;    
+}
+
+.title{
+    font-size: 1.5em;
+}
+
+#main{
+    width: 100%;
+}
+
+.game-information-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+}
+
+ul.score-list{
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.score-container{    
+}
+
+ul.score-list li{
+    padding: 0 10px;    
+}
+
+#score{
+    color: gold;
+}
+
+.controls-container{
+    display: flex;    
+    align-items: center;
+}
+
+.reset-btn{
+    background-color: #0078e7;
+    border-radius: 6px;
+    color: #fff;    
+    font-size: 0.8em;    
+    padding: 5px 10px;    
+}
+
+.deck-container{
+    width: 98%;
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 5px;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+
+    /* background-image: url(../img/gundam_00_background_medium_2.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center; */
+
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);    
+}
+
+.card{
+    /* Make sure items are spaced out by 10px on each side */
+    width: calc(25% - 10px);
+    margin: 10px 5px;    
+    min-height: 120px;
+    border-radius: 5px;
+    position: relative;
+        
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    border: 2px solid #0078e7;    
+}
+
+.card-mask-active{
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.flipped-card{
+    /* background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center; */
+
+    animation-name: flip;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-timing-function: linear;
+}
+
+.error-card{
+    animation-name: mismatch;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-timing-function: ease-in-out;
+
+    border: 2px solid rgb(202, 60, 60);
+}
+
+.success-card{
+    animation-name: match;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-timing-function: ease-in-out;
+
+    border: 2px solid rgb(28, 184, 65);    
+}
+
+.playable{
+    background-image: url(../img/gundam_00_head_small.jpg);
+}
+
+.kyrios{
+    background-image: url(../img/kyrios_front_small.jpg);
+}
+
+.exia{
+    background-image: url(../img/exia_front_small.jpg);   
+}
+
+.dynames{
+    background-image: url(../img/dynames_front_small.jpg);   
+}
+
+.virtue{
+    background-image: url(../img/virtue_front_small.jpg);   
+}
+
+.cherudim{
+    background-image: url(../img/cherudim_front_small.jpg);   
+}
+
+.arios{
+    background-image: url(../img/arios_front_small.jpg);   
+}
+
+.seravee{
+    background-image: url(../img/seravee_front_small.jpg);   
+}
+
+.double00_raiser{
+    background-image: url(../img/double00_raiser_front_small.jpg);   
+}
+
+
+.success-mask{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.success-content-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
+}
+
+.success-title{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 2em;
+    color:  rgb(28, 184, 65);  
+}
+
+.success-text{
+    width: 100%;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.success-retry-container{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+.retry-btn{
+    background-color: rgb(28, 184, 65);    
+}
+
+.btn {
+    /* Pure CSS copy and slight amendments */
+    color: white;
+    border-radius: 5px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 8px;
+    font-size: 1em;
+}
+
+
+@keyframes flip{
+    0%{
+        transform: rotateY(0deg);               
+    }
+
+    100%{
+        transform: rotateY(180deg);        
+    }
+}
+
+@keyframes mismatch{
+    0%{
+        transform: translateX(-20px);
+    }
+
+    25%{
+        transform: translateX(20px);
+    }
+
+    75%{
+        transform: translateX(-20px);
+    }
+
+    100%{
+        transform: translateX(20px);        
+    }
+}
+
+@keyframes match{
+    0%{
+        transform: scaleX(2.0);
+    }
+
+    25%{
+        transform: scaleX(1.5);
+    }
+
+    75%{
+        transform: scaleX(1.25);
+    }
+
+    100%{
+        transform: scaleX(1.0);
+    }
+}
+
+/* MEDIA QUERIES FOR LARGER THAN MOBILE SCREEN SIZES */
+@media screen and (min-width: 550px){
+    .card{
+        min-height: 180px;
+    }
+}
+
+@media screen and (min-width: 750px){        
+    body{
+        width: 750px;      
+        margin-left: auto;
+        margin-right: auto;  
+    }
+
+    .card{
+        min-height: 200px;
+    }
+
+    .deck-container{
+        margin-top: 50px;
+    }
+        
+}
