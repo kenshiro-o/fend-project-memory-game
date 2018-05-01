@@ -156,7 +156,7 @@ function handleClicks(assignedCards) {
         const v = assignedCard["value"];
         const fn = function (e) {
             e.preventDefault();
-            console.log(`Click event on card with value ${v}`);
+            // console.log(`Click event on card with value ${v}`);
 
             e.currentTarget.innerHTML = "";
 
@@ -165,10 +165,9 @@ function handleClicks(assignedCards) {
             e.currentTarget.classList.add(v);
 
             ++flipCount;
-            console.log(`Flip count ${flipCount}`);
+            // console.log(`Flip count ${flipCount}`);
             if (flipCount === 2) {
                 setTimeout(function () {
-                    console.log("Call match flipped");
                     matchFlipped();
                     flipCount = 0;
                 }, 300);
@@ -207,12 +206,12 @@ function matchFlipped() {
     let deckCard2 = findDeckCard(flippedCards[1]);
 
     if (!deckCard1 || !deckCard2) {
-        console.log(`No deck cards found! [card1=${deckCard1}, card2=${deckCard2}]`);
+        // console.log(`No deck cards found! [card1=${deckCard1}, card2=${deckCard2}]`);
         // How to best handle this error in the future?
         return;
     }
 
-    console.log(`Deck cards found [card-1=${deckCard1.value}, card-2=${deckCard2.value}]`);
+    // console.log(`Deck cards found [card-1=${deckCard1.value}, card-2=${deckCard2.value}]`);
     if (deckCard1.value !== deckCard2.value) {
 
         deckCard1.card.classList.add("error-card");

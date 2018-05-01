@@ -189,6 +189,7 @@ ul.score-list li{
 
 .playable{
     background-image: url(../img/gundam_00_head_small.jpg);
+    cursor: pointer;
 }
 
 .kyrios{
@@ -226,7 +227,7 @@ ul.score-list li{
 
 .success-mask{
     position: absolute;
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
     background-color: rgba(255, 255, 255, 0.95);
     z-index: 10;
@@ -330,7 +331,7 @@ ul.score-list li{
 /* MEDIA QUERIES FOR LARGER THAN MOBILE SCREEN SIZES */
 @media screen and (min-width: 550px){
     .card{
-        min-height: 180px;
+        min-height: 120px;
     }
 }
 
@@ -342,11 +343,11 @@ ul.score-list li{
     }
 
     .card{
-        min-height: 200px;
+        min-height: 150px;
     }
 
     .deck-container{
-        margin-top: 50px;
+        margin-top: 25px;
     }
         
 }
