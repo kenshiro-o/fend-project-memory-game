@@ -1,9 +1,6 @@
 /*
  * Create a list that holds all of your cards
  */
-
-// const allCards = document.getElementsByClassName("card");
-// let deckCards = shuffleAndAssign(allCards, gundams);
 let allCards, deckCards;
 
 const gundams = ["exia", "dynames", "kyrios", "virtue", "cherudim", "arios", "seravee", "double00_raiser"];

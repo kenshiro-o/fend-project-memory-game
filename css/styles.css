@@ -84,9 +84,6 @@ ul.score-list{
     padding: 0;
 }
 
-.score-container{    
-}
-
 ul.score-list li{
     padding: 0 10px;    
 }
@@ -121,12 +118,6 @@ ul.score-list li{
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-
-    /* background-image: url(../img/gundam_00_background_medium_2.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center; */
-
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);    
 }
 
@@ -142,6 +133,7 @@ ul.score-list li{
     background-size: 100% 100%;
     background-position: center;
     border: 2px solid #0078e7;    
+    box-shadow: 7px 8px 5px 0px rgba(46, 61, 73, 0.5);
 }
 
 .card-mask-active{
@@ -159,10 +151,6 @@ ul.score-list li{
 }
 
 .flipped-card{
-    /* background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center; */
-
     animation-name: flip;
     animation-duration: 0.5s;
     animation-delay: 0s;
@@ -226,8 +214,7 @@ ul.score-list li{
 
 
 .success-mask{
-    position: absolute;
-    /* width: 100%; */
+    position: absolute;    
     height: 100%;
     background-color: rgba(255, 255, 255, 0.95);
     z-index: 10;
