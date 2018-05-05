@@ -153,7 +153,8 @@ function handleClicks(assignedCards) {
         const v = assignedCard["value"];
         const fn = function (e) {
             e.preventDefault();
-            // console.log(`Click event on card with value ${v}`);
+            e.stopPropagation();
+            console.log(`Click event on card with value ${v}`);
 
             e.currentTarget.innerHTML = "";
 
@@ -164,17 +165,15 @@ function handleClicks(assignedCards) {
             ++flipCount;
             // console.log(`Flip count ${flipCount}`);
             if (flipCount === 2) {
+                flipCount = 0;
                 setTimeout(function () {
                     matchFlipped();
-                    flipCount = 0;
                 }, 300);
-
-
             }
         }
 
         // Make sure we capture the event on the "card" div and not the inner mask
-        let options = { capture: true };
+        let options = { capture: true, once: true };
         assignedCard.card.addEventListener("click", fn, options);
         assignedCard["click_function"] = fn;
     }
@@ -185,7 +184,8 @@ function unregisterClickEvents(assignedCards) {
         if (!assignedCard["click_function"]) {
             continue;
         }
-        assignedCard.card.removeEventListener("click", assignedCard["click_function"]);
+        let options = { capture: true };
+        assignedCard.card.removeEventListener("click", assignedCard["click_function"], options);
         assignedCard["click_function"] = null;
     }
 }
