@@ -3,6 +3,9 @@
  */
 let allCards, deckCards;
 
+let gameStartTime;
+let timerIntervalId;
+
 const gundams = ["exia", "dynames", "kyrios", "virtue", "cherudim", "arios", "seravee", "double00_raiser"];
 let flipCount = 0;
 let turnCount = 0;
@@ -65,6 +68,30 @@ function createDeck() {
     return document.getElementsByClassName("card");
 }
 
+function updateTimer() {
+    const timeElpasedMillis = Date.now() - gameStartTime;
+    const timeElapsedSeconds = Math.floor((timeElpasedMillis / 1000) % 60);
+    const timeElapsedMinutes = Math.floor((timeElpasedMillis / 1000) / 60);
+
+    const minutesStr = timeElapsedMinutes < 10 ? `0${timeElapsedMinutes}` : `${timeElapsedMinutes}`;
+    const secondsStr = timeElapsedSeconds < 10 ? `0${timeElapsedSeconds}` : `${timeElapsedSeconds}`;
+
+    let timeElapsedElem = document.getElementById("time-elapsed");
+    timeElapsedElem.textContent = `${minutesStr}:${secondsStr}`;
+}
+
+function stopTimer() {
+    if (timerIntervalId) {
+        clearInterval(timerIntervalId);
+        timerIntervalId = null;
+    }
+}
+
+function startTimer() {
+    stopTimer();
+    timerIntervalId = setInterval(updateTimer, 1000);
+}
+
 function resetGame() {
     flipCount = 0;
     turnCount = 0;
@@ -72,13 +99,13 @@ function resetGame() {
     allCards = createDeck();
     deckCards = shuffleAndAssign(allCards, gundams);
     updateScore();
+
+    gameStartTime = Date.now();
+    startTimer();
+
     // By default we have a click event listener assigned to all cards
     handleClicks(deckCards);
 }
-
-
-
-
 
 function shuffleAndAssign(cards, values) {
     let assignedCards = [];
@@ -147,7 +174,10 @@ function getRemainingPlayableCards() {
 
 
 
-
+/**
+ * Registers click event handlers for deck cards
+ * @param {*} assignedCards the wrappers of cards currently associated with a value
+ */
 function handleClicks(assignedCards) {
     for (assignedCard of assignedCards) {
         const v = assignedCard["value"];
@@ -165,6 +195,9 @@ function handleClicks(assignedCards) {
             ++flipCount;
             // console.log(`Flip count ${flipCount}`);
             if (flipCount === 2) {
+                // Make all cards not clickable for now
+                unregisterClickEvents(deckCards);
+
                 flipCount = 0;
                 setTimeout(function () {
                     matchFlipped();
@@ -173,7 +206,10 @@ function handleClicks(assignedCards) {
         }
 
         // Make sure we capture the event on the "card" div and not the inner mask
-        let options = { capture: true, once: true };
+        let options = {
+            capture: true,
+            once: true
+        };
         assignedCard.card.addEventListener("click", fn, options);
         assignedCard["click_function"] = fn;
     }
@@ -184,7 +220,9 @@ function unregisterClickEvents(assignedCards) {
         if (!assignedCard["click_function"]) {
             continue;
         }
-        let options = { capture: true };
+        let options = {
+            capture: true
+        };
         assignedCard.card.removeEventListener("click", assignedCard["click_function"], options);
         assignedCard["click_function"] = null;
     }
@@ -192,9 +230,6 @@ function unregisterClickEvents(assignedCards) {
 
 function matchFlipped() {
     let flippedCards = document.getElementsByClassName("current-card");
-
-    // Make all cards not clickable for now
-    unregisterClickEvents(deckCards);
 
     // Increment the number of turns
     ++turnCount;
@@ -258,6 +293,12 @@ function matchFlipped() {
     return;
 }
 
+
+
+/**
+ * Checks whether all cards have been successfully paired and if
+ * so displayed the congratulation message along with game stats.
+ */
 function checkGameFinished() {
     const succesCards = document.getElementsByClassName("success-card");
     if (succesCards.length < 16) {
@@ -268,13 +309,49 @@ function checkGameFinished() {
     let successMask = document.createElement("div");
     successMask.classList.add("success-mask");
 
+    const timeTakenSeconds = Math.floor((Date.now() - gameStartTime) / 1000.0);
+    const timeTakenStr = `${timeTakenSeconds.toFixed(0)}s`;
+
+    stopTimer();
+
     let successMaskInnerHTML = `<div class="success-content-container">
         <h2 class="success-title">
         Congratulations!
         </h2>
         <p class="success-text">
-        You have successfully completed the Gundam memory game in ${turnCount} moves.
+        You have successfully completed the Gundam memory game!!
         </p>
+        <div id="stats-container" class="animated fadeInDown">
+            <h3 class="stats-title">
+            Stats
+            </h3>
+            <table class="stats-table">
+                <tr>
+                    <td class="stats-name-cell">
+                    Moves
+                    </td>
+                    <td class="stats-value-cell">
+                    ${turnCount}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stats-name-cell">
+                    Time
+                    </td>
+                    <td class="stats-value-cell">
+                    ${timeTakenStr}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stats-name-cell">
+                    Score
+                    </td>
+                    <td class="stats-value-cell score">
+                    ${getStarRatingHTML(turnCount)}
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div class="success-retry-container">
             <button class="btn retry-btn" id="retry-btn">Try again</button>
         </div>
@@ -283,8 +360,11 @@ function checkGameFinished() {
     body.insertAdjacentElement("afterbegin", successMask);
     successMask.innerHTML = successMaskInnerHTML;
 
+    const options = {
+        once: true
+    };
     let retryBtn = document.getElementById("retry-btn");
-    let options = { once: true };
+
     retryBtn.addEventListener("click", function (e) {
         e.preventDefault();
 
@@ -297,23 +377,34 @@ function checkGameFinished() {
     return;
 }
 
-function updateScore() {
-    let scoreElem = document.getElementById("score");
-    let movesElem = document.getElementById("moves");
-
+/**
+ * Generates the appropriate HTML for the game's star rating
+ * @param {*} moves the number of moves made in the game so far
+ * @returns the HTML for the star rating commensurate with the moves
+ */
+function getStarRatingHTML(moves) {
     let scoreStarsHtml = `<i class="fas fa-star star-full"></i>
     <i class="fas fa-star star-full"></i>
     <i class="fas fa-star star-full"></i>`;
 
-    if (turnCount > 8 && turnCount <= 10) {
+    if (moves > 8 && moves <= 10) {
         scoreStarsHtml = `<i class="fas fa-star star-full"></i>
         <i class="fas fa-star star-full"></i>
         <i class="far fa-star"></i>`;
-    } else if (turnCount > 10) {
+    } else if (moves > 10) {
         scoreStarsHtml = `<i class="fas fa-star star-full"></i>
         <i class="far fa-star"></i>
         <i class="far fa-star"></i>`;
     }
+
+    return scoreStarsHtml;
+}
+
+function updateScore() {
+    let scoreElem = document.getElementById("score");
+    let movesElem = document.getElementById("moves");
+
+    const scoreStarsHtml = getStarRatingHTML(turnCount);
     scoreElem.innerHTML = scoreStarsHtml;
     movesElem.textContent = `${turnCount} Moves`;
 }

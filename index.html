@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animate.css">
     <script defer src="js/fontawesome-all.js"></script>
     <title>Gundam Memory Card Game</title>
 </head>
@@ -21,13 +22,16 @@
         <div class="game-information-container">
             <div class="score-container">
                 <ul class="score-list">
-                    <li id="score">
+                    <li id="score" class="score">
                     </li>
                     <li id="moves">0 Moves</li>
                 </ul>
             </div>
             <div class="controls-container">
                 <button class="btn reset-btn" id="reset-btn">Reset</button>
+            </div>
+            <div class="timer-container">
+                <span id="time-elapsed">00:00</span>
             </div>
         </div>
 

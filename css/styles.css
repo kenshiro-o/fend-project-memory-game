@@ -88,7 +88,7 @@ ul.score-list li{
     padding: 0 10px;    
 }
 
-#score{
+.score{
     color: gold;
 }
 
@@ -268,6 +268,71 @@ ul.score-list li{
     font-size: 1em;
 }
 
+
+#time-elapsed{
+    border: 1px solid #521818;    
+    background-color: #de1313;
+    
+    color: white;
+    border-radius: 5px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;    
+    padding: 5px 8px;
+    font-size: 1em;
+}
+
+#stats-container{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+        
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-timing-function: ease;
+}
+
+.invisible{
+    opacity: 0;
+}
+
+.visible{
+    opacity: 1;
+}
+
+.stats-title{
+    color: rgb(28, 184, 65);  
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.stats-table{
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 1px solid white;
+    background-color: rgb(28, 184, 65);
+    border-radius: 6px;
+    padding: 0 15px;
+    font-size: 1em;
+
+    color: #FFF;
+}
+
+
+td {
+    padding: 5px 10px;
+}
+
+.stats-name-cell{
+    text-align: left;    
+
+}
+
+.stats-value-cell{
+    text-align: right;
+}
+
+/* ANIMATIONS */
 
 @keyframes flip{
     0%{
