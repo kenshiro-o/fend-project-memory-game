@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-let allCards, deckCards;
+let allCards;
+let deckCards;
 
 let gameStartTime;
 let timerIntervalId;
@@ -15,55 +16,20 @@ let turnCount = 0;
  */
 function createDeck() {
     let deckContainer = document.getElementById("deck-container");
-    deckContainer.innerHTML = `<div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
+    deckContainer.innerHTML = "";
 
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>
-            <div class="card playable">
-                <div class="card-mask-active"></div>
-            </div>`;
+    let fragment = document.createDocumentFragment();
+    for (let i = 0; i < 16; ++i) {
+        const card = document.createElement("div");
+        card.className = "card playable";
+
+        const cardMask = document.createElement("div");
+        cardMask.className = "card-mask-active";
+
+        fragment.appendChild(card);
+        card.appendChild(cardMask);
+    }
+    deckContainer.appendChild(fragment);
 
     return document.getElementsByClassName("card");
 }
